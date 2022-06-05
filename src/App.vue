@@ -3,6 +3,8 @@
     <router-link to="/login">Login</router-link>
     <router-link to="/main">Main</router-link>
     <router-view></router-view>
+
+    <h2>{{ $store.state.name }}</h2>
   </div>
 </template>
 
