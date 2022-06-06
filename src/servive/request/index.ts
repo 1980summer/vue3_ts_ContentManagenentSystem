@@ -20,6 +20,7 @@ class YXRequest {
 
     this.interceptors = config.interceptors
 
+    // 从config中取出的拦截器是对应实例的拦截器
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,
       this.interceptors?.requestInterceptorCatch
@@ -28,6 +29,31 @@ class YXRequest {
     this.instance.interceptors.response.use(
       this.interceptors?.responseInterceptor,
       this.interceptors?.responseInterceptorCatch
+    )
+
+    // 添加所有的实例都有的拦截器
+    this.instance.interceptors.request.use(
+      (config) => {
+        console.log('所有实例都有的请求成功的拦截')
+        return config
+      },
+      (err) => {
+        console.log('所有实例都有的请求失败的拦截')
+
+        return err
+      }
+    )
+    this.instance.interceptors.response.use(
+      (res) => {
+        console.log('所有实例都有的响应成功的拦截')
+
+        return res
+      },
+      (err) => {
+        console.log('所有实例都有的响应失败的拦截')
+
+        return err
+      }
     )
   }
 
