@@ -4,18 +4,19 @@
 // 在测试环境下，process.env.NODE_ENV的值就是 test
 
 let BASE_URL = ''
-let BASE_NAME = ''
+let TIME_OUT = 15000
 
 if (process.env.NODE_ENV === 'development') {
-  BASE_URL = 'http://coder.org/dev'
-  BASE_NAME = 'summer'
+  // BASE_URL = 'http://152.136.185.210:5000'
+  BASE_URL = 'http://123.207.32.32:8000'
+  TIME_OUT = 15000
 } else if (process.env.NODE_ENV === 'production') {
   BASE_URL = 'http://coder.org/pro'
-  BASE_NAME = 'winter'
+  TIME_OUT = 20000
 } else {
   BASE_URL = 'http://coder.org/test'
-  BASE_NAME = 'spring'
+  TIME_OUT = 10000
 }
 
 // es module语法， 看起来像一个对象但不是对象
-export { BASE_URL, BASE_NAME }
+export { BASE_URL, TIME_OUT }
