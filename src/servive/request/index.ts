@@ -1,5 +1,5 @@
 import axios from 'axios'
-import type { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
+import type { AxiosInstance } from 'axios'
 import type { YXRequestInterceptors, YXRequestConfig } from './types'
 
 // 创建一个类并导出
@@ -58,8 +58,16 @@ class YXRequest {
   }
 
   // 封装一个request方法，用来发送请求，以供外界调用
-  request(config: AxiosRequestConfig): void {
+  // 单个请求拦截器的封装
+  request(config: YXRequestConfig): void {
+    if (config.interceptors?.requestInterceptor) {
+      config = config.interceptors.requestInterceptor(config)
+    }
+
     this.instance.request(config).then((res) => {
+      if (config.interceptors?.responseInterceptor) {
+        res = config.interceptors.responseInterceptor(res)
+      }
       console.log(res)
     })
   }
