@@ -11,7 +11,7 @@
             </span>
           </template>
 
-          <LoginAccount></LoginAccount>
+          <LoginAccount ref="accountRef"></LoginAccount>
         </el-tab-pane>
         <el-tab-pane>
           <template #label>
@@ -24,12 +24,19 @@
           <LoginPhone></LoginPhone>
         </el-tab-pane>
       </el-tabs>
+
+      <div class="account-control">
+        <el-checkbox v-model="isKeepPassword" class="remember">记住密码</el-checkbox>
+        <el-link type="primary" class="forget">忘记密码</el-link>
+      </div>
+
+      <el-button type="primary" class="login-btn" @click="handleLoginClick">立即登录</el-button>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { UserFilled, Iphone } from '@element-plus/icons'
 import LoginAccount from './login-account.vue'
 import LoginPhone from './login-phone.vue'
@@ -42,7 +49,13 @@ export default defineComponent({
     LoginPhone
   },
   setup() {
-    return {}
+    const isKeepPassword = ref(true)
+    const accountRef = ref<InstanceType<typeof LoginAccount>>() // 绑定给LoginAccount组件，用来获取LoginAccount这个组件. ref的类型是LoginAccount
+
+    const handleLoginClick = () => {
+      accountRef.value?.loginAction() // 调用LoginAccount组件的loginAction方法
+    }
+    return { isKeepPassword, handleLoginClick, accountRef }
   }
 })
 </script>
@@ -68,5 +81,21 @@ export default defineComponent({
 .demo-tabs .custom-tabs-label span {
   vertical-align: middle;
   margin-left: 4px;
+}
+// ===============
+.account-control {
+  display: flex;
+  justify-content: space-between;
+  .forget,
+  .remember {
+    color: rgb(71, 91, 224);
+    // font-size: 16px;
+    // font-weight: bold;
+  }
+}
+.login-btn {
+  width: 100%;
+  height: 45px;
+  margin-top: 10px;
 }
 </style>

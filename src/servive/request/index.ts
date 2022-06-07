@@ -36,7 +36,6 @@ class YXRequest {
     // 2 添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log('所有实例都有的请求成功的拦截')
         if (this.showLoading) {
           this.loading = ElLoading.service({
             // fullscreen: true,
@@ -48,15 +47,11 @@ class YXRequest {
         return config
       },
       (err) => {
-        console.log('所有实例都有的请求失败的拦截')
-
         return err
       }
     )
     this.instance.interceptors.response.use(
       (res) => {
-        console.log('所有实例都有的响应成功的拦截')
-
         // 将lloading移除
 
         setTimeout(() => {
@@ -64,15 +59,14 @@ class YXRequest {
         }, 2000)
 
         const data = res.data
+        // eslint-disable-next-line no-empty
         if (data.returnCode === '-1001') {
-          console.log('请求失败，这是错误信息')
         } else {
           return data
         }
         return res.data
       },
       (err) => {
-        console.log('所有实例都有的响应失败的拦截')
         if (err.response.status === 404) {
           console.log('404错误!!')
         }
