@@ -1,13 +1,16 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
 import store from './store'
+import router from './router'
+
 import yxRequest from './servive'
+
+import 'element-plus/theme-chalk/el-loading.css' // 引入对应样式，ELLoding才能生效
 
 const app = createApp(App)
 
-app.use(store)
-app.use(router)
+app.use(store as any)
+app.use(router as any)
 app.mount('#app')
 
 yxRequest.request({
@@ -22,5 +25,6 @@ yxRequest.request({
       console.log('单独响应的response')
       return res
     }
-  }
+  },
+  showLoding: false
 })

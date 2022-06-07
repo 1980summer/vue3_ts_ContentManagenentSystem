@@ -8,4 +8,5 @@ export interface YXRequestInterceptors {
 
 export interface YXRequestConfig extends AxiosRequestConfig {
   interceptors?: YXRequestInterceptors
+  showLoding?: boolean
 }
