@@ -83,7 +83,7 @@ class YXRequest {
 
   // 封装一个request方法，用来发送请求，以供外界调用
   // 单个请求拦截器的封装
-  request<T>(config: YXRequestConfig): Promise<T> {
+  request<T>(config: YXRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
       // 1 单个请求对config的处理
       if (config.interceptors?.requestInterceptor) {
@@ -119,20 +119,20 @@ class YXRequest {
   }
 
   // 封装
-  get<T>(config: YXRequestConfig): Promise<T> {
+  get<T>(config: YXRequestConfig<T>): Promise<T> {
     // 调用request
     return this.request<T>({ ...config, method: 'GET' })
   }
 
-  post<T>(config: YXRequestConfig): Promise<T> {
+  post<T>(config: YXRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'POST' })
   }
 
-  delete<T>(config: YXRequestConfig): Promise<T> {
+  delete<T>(config: YXRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'DELETE' })
   }
 
-  patch<T>(config: YXRequestConfig): Promise<T> {
+  patch<T>(config: YXRequestConfig<T>): Promise<T> {
     return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
