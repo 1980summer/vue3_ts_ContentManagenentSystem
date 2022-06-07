@@ -50,10 +50,10 @@ export default defineComponent({
   },
   setup() {
     const isKeepPassword = ref(true)
-    const accountRef = ref<InstanceType<typeof LoginAccount>>() // 绑定给LoginAccount组件，用来获取LoginAccount这个组件. ref的类型是LoginAccount
+    const accountRef = ref<InstanceType<typeof LoginAccount>>() // 绑定给LoginAccount组件，用来获取LoginAccount这个组件里的大对象. ref的类型是LoginAccount
 
     const handleLoginClick = () => {
-      accountRef.value?.loginAction() // 调用LoginAccount组件的loginAction方法
+      accountRef.value?.loginAction(isKeepPassword.value) // 调用LoginAccount组件的loginAction方法
     }
     return { isKeepPassword, handleLoginClick, accountRef }
   }
