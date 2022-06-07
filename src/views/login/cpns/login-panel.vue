@@ -2,8 +2,8 @@
   <div class="login-panel">
     <div class="title">
       <h1>后台管理系统</h1>
-      <el-tabs type="border-card" class="demo-tabs" stretch>
-        <el-tab-pane>
+      <el-tabs type="border-card" class="demo-tabs" stretch v-model="currentTab">
+        <el-tab-pane name="account">
           <template #label>
             <span class="custom-tabs-label">
               <el-icon><UserFilled /></el-icon>
@@ -13,7 +13,7 @@
 
           <LoginAccount ref="accountRef"></LoginAccount>
         </el-tab-pane>
-        <el-tab-pane>
+        <el-tab-pane name="phone">
           <template #label>
             <span class="custom-tabs-label">
               <el-icon><Iphone /></el-icon>
@@ -21,7 +21,7 @@
             </span>
           </template>
 
-          <LoginPhone></LoginPhone>
+          <LoginPhone ref="phoneRef"></LoginPhone>
         </el-tab-pane>
       </el-tabs>
 
@@ -49,13 +49,21 @@ export default defineComponent({
     LoginPhone
   },
   setup() {
+    // 1 定义属性
     const isKeepPassword = ref(true)
     const accountRef = ref<InstanceType<typeof LoginAccount>>() // 绑定给LoginAccount组件，用来获取LoginAccount这个组件里的大对象. ref的类型是LoginAccount
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>()
+    const currentTab = ref<string>('phone')
 
+    // 2 定义方法
     const handleLoginClick = () => {
-      accountRef.value?.loginAction(isKeepPassword.value) // 调用LoginAccount组件的loginAction方法
+      if (currentTab.value === 'account') {
+        accountRef.value?.loginAction(isKeepPassword.value) // 调用LoginAccount组件的loginAction方法
+      } else {
+        console.log('phoneRef调用对应的组件方法')
+      }
     }
-    return { isKeepPassword, handleLoginClick, accountRef }
+    return { isKeepPassword, handleLoginClick, accountRef, phoneRef, currentTab }
   }
 })
 </script>
