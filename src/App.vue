@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <router-link to="/login">Login</router-link>
+    <router-link to="/login"></router-link>
     <router-view></router-view>
   </div>
 </template>
