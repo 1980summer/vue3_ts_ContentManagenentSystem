@@ -15,7 +15,7 @@ class YXRequest {
    * 包含了url、baseURL、timeout、data等等字段
    */
   constructor(config: YXRequestConfig) {
-    // axios里的create方法可以创建出来一个实例
+    // axios里的create方法可以创建出来一个axios实例
     this.instance = axios.create(config)
 
     this.interceptors = config.interceptors
@@ -46,12 +46,19 @@ class YXRequest {
     this.instance.interceptors.response.use(
       (res) => {
         console.log('所有实例都有的响应成功的拦截')
-
-        return res
+        const data = res.data
+        if (data.returnCode === '-1001') {
+          console.log('请求失败，这是错误信息')
+        } else {
+          return data
+        }
+        // return res.data
       },
       (err) => {
         console.log('所有实例都有的响应失败的拦截')
-
+        if (err.response.status === 404) {
+          console.log('404错误！！！')
+        }
         return err
       }
     )
