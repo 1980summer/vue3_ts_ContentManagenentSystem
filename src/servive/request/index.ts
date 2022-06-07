@@ -13,20 +13,16 @@ class YXRequest {
   interceptors?: YXRequestInterceptors
   loading?: LoadingInstance
   showLoading: boolean
-  /**
-   * 1、在class里的construct构造函数，只要new出来=一个实例，就会被执行
-   * 所以可以通过将基本的配置写在构造函数里，所有的实例就都拥有并自动这个配置
-   * 可以用来配置baseURL、timeout这些公用的基础配置
-   * 2、config的类型也是第三方库的类型，即axios中的AxiosRequestConfig,里面
-   * 包含了url、baseURL、timeout、data等等字段
-   */
+
   constructor(config: YXRequestConfig) {
-    // axios里的create方法可以创建出来一个axios实例
+    // 创建axios实例
     this.instance = axios.create(config)
+    // 保存基本信息
     this.showLoading = config.showLoding ?? DEFAULT_LOADING // 意思是有值吗？没有就给一个true
     this.interceptors = config.interceptors
 
-    // 从config中取出的拦截器是对应实例的拦截器
+    // 使用拦截器
+    // 1 从config中取出的拦截器是对应实例的拦截器
     this.instance.interceptors.request.use(
       this.interceptors?.requestInterceptor,
       this.interceptors?.requestInterceptorCatch
@@ -37,7 +33,7 @@ class YXRequest {
       this.interceptors?.responseInterceptorCatch
     )
 
-    // 添加所有的实例都有的拦截器
+    // 2 添加所有的实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
         console.log('所有实例都有的请求成功的拦截')
@@ -87,31 +83,57 @@ class YXRequest {
 
   // 封装一个request方法，用来发送请求，以供外界调用
   // 单个请求拦截器的封装
-  request(config: YXRequestConfig): void {
-    if (config.interceptors?.requestInterceptor) {
-      config = config.interceptors.requestInterceptor(config)
-    }
+  request<T>(config: YXRequestConfig): Promise<T> {
+    return new Promise((resolve, reject) => {
+      // 1 单个请求对config的处理
+      if (config.interceptors?.requestInterceptor) {
+        config = config.interceptors.requestInterceptor(config)
+      }
+      // 2 判断是否要显示loading
+      if (config.showLoding === false) {
+        this.showLoading = config.showLoding
+      }
 
-    if (config.showLoding === false) {
-      this.showLoading = config.showLoding
-    }
+      this.instance
+        .request<any, T>(config)
+        .then((res) => {
+          // 1 单个请求对数据的处理
+          if (config.interceptors?.responseInterceptor) {
+            res = config.interceptors.responseInterceptor(res)
+          }
+          console.log(res)
 
-    this.instance
-      .request(config)
-      .then((res) => {
-        if (config.interceptors?.responseInterceptor) {
-          res = config.interceptors.responseInterceptor(res)
-        }
-        console.log(res)
+          // 2 将showLoading设置为true，这样不会影响下一个请求，不然会一直使用上一个请求的配置
+          this.showLoading = DEFAULT_LOADING
 
-        // 将showLoading设置为true，这样不会影响下一个请求，不然会一直使用上一个请求的配置
-        this.showLoading = DEFAULT_LOADING
-      })
-      .catch((err) => {
-        // 将showLoading设置为true，这样不会影响下一个请求，不然会一直使用上一个请求的配置
-        this.showLoading = DEFAULT_LOADING
-        return err
-      })
+          // 3 将结果resolve返回出去
+          resolve(res)
+        })
+        .catch((err) => {
+          // 将showLoading设置为true，这样不会影响下一个请求，不然会一直使用上一个请求的配置
+          this.showLoading = DEFAULT_LOADING
+          reject(err)
+          return err
+        })
+    })
+  }
+
+  // 封装
+  get<T>(config: YXRequestConfig): Promise<T> {
+    // 调用request
+    return this.request<T>({ ...config, method: 'GET' })
+  }
+
+  post<T>(config: YXRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'POST' })
+  }
+
+  delete<T>(config: YXRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'DELETE' })
+  }
+
+  patch<T>(config: YXRequestConfig): Promise<T> {
+    return this.request<T>({ ...config, method: 'PATCH' })
   }
 }
 
