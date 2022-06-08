@@ -47,7 +47,7 @@ export default defineComponent({
             LocalCache.deleteItem('password')
           }
           // 2 开始进行登录验证
-          store.dispatch('loginModule/accountLoginAction', { ...account })
+          store.dispatch('login/accountLoginAction', { ...account })
         }
       })
     }
