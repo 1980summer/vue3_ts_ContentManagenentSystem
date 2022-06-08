@@ -13,22 +13,5 @@ const app = createApp(App)
 app.use(store as any)
 app.use(router as any)
 
-setupStore()
+setupStore() // 只要项目跑起来就会调用这个方法
 app.mount('#app')
-
-// interface DataType {
-//   data: any
-//   returnCode: string
-//   success: boolean
-// }
-
-// yxRequest
-//   .request<DataType>({
-//     url: '/home/multidata',
-//     method: 'GET'
-//   })
-//   .then((res) => {
-//     console.log(res.data)
-//     console.log(res.returnCode)
-//     console.log(res.success)
-//   })

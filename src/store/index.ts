@@ -1,6 +1,6 @@
 import { createStore } from 'vuex'
 import { IRootState } from './types'
-import login from './login/login'
+import loginModule from './login/login'
 const store = createStore<IRootState>({
   state: () => {
     return {
@@ -12,12 +12,12 @@ const store = createStore<IRootState>({
   getters: {},
   actions: {},
   modules: {
-    login
+    loginModule
   }
 })
 
 // 对store里的数据做初始化
 export function setupStore() {
-  store.dispatch('login/loadLocalLogin')
+  store.dispatch('loginModule/loadLocalLogin')
 }
 export default store
