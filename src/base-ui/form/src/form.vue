@@ -1,10 +1,11 @@
 <template>
   <div class="yx-form">
-    <el-form label-width="100px">
+    <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
-          <el-col :span="8">
-            <el-form-item :label="item.label">
+          <!-- v-bind可以绑定所有属性 -->
+          <el-col v-bind="colLayout">
+            <el-form-item :label="item.label" :style="itemStyle">
               <template v-if="item.type === 'input' || item.type === 'password'">
                 <el-input
                   :placeholder="item.palceholder"
@@ -42,6 +43,24 @@ export default defineComponent({
     formItems: {
       type: Array as PropType<IFormItem[]>,
       default: () => []
+    },
+    labelWidth: {
+      type: String,
+      default: '100px'
+    },
+    itemStyle: {
+      type: Object,
+      default: () => ({ padding: '10px 40px' })
+    },
+    colLayout: {
+      type: Object,
+      default: () => ({
+        xl: 6, // >1920px 4个
+        lg: 8,
+        md: 12,
+        sm: 24,
+        xs: 24
+      })
     }
   },
   setup() {
@@ -50,4 +69,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.yx-form {
+  padding-top: 22px;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <div class="search">
-      <YxForm :formItems="formItems"></YxForm>
+      <YxForm v-bind="searchFormConfig"></YxForm>
     </div>
     <div class="content"></div>
   </div>
@@ -9,7 +9,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue'
-import YxForm, { IFormItem } from '@/base-ui/form'
+import YxForm from '@/base-ui/form'
+import { searchFormConfig } from './config/serach.config'
 
 export default defineComponent({
   name: 'user',
@@ -17,45 +18,9 @@ export default defineComponent({
     YxForm
   },
   setup() {
-    const formItems: IFormItem[] = [
-      {
-        type: 'input',
-        label: '用户名',
-        palceholder: '请输入用户名'
-      },
-      {
-        type: 'password',
-        label: '密码',
-        palceholder: '请输入密码'
-      },
-      {
-        type: 'select',
-        label: '喜欢的运动',
-        palceholder: '请输入喜欢的运动',
-        options: [
-          {
-            title: '篮球',
-            value: 'basketball'
-          },
-          {
-            title: '足球',
-            value: 'football'
-          }
-        ]
-      },
-      {
-        type: 'datepicker',
-        label: '创建时间',
-        otherOptions: {
-          starPlaceHolder: '开始时间',
-          endPlaceHolder: '结束时间',
-          type: 'daterange'
-        }
-      }
-    ]
-    return { formItems }
+    return { searchFormConfig }
   }
 })
 </script>
 
-<style scoped></style>
+<style scoped lang="less"></style>
