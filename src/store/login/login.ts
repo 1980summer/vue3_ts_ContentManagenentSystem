@@ -9,6 +9,7 @@ import {
 import { IAccount } from '@/servive/login/types'
 import LocalCache from '@/utils/cache'
 import router from '@/router'
+import { mapMenuToRoutes } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -28,6 +29,9 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus
+      // userMenus 映射到 routes 里面
+      // 将routes 添加到 router.main.children 里
+      mapMenuToRoutes(userMenus)
     }
   },
   getters: {},
