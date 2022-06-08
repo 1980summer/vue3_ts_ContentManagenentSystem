@@ -31,7 +31,11 @@ const loginModule: Module<ILoginState, IRootState> = {
       state.userMenus = userMenus
       // userMenus 映射到 routes 里面
       // 将routes 添加到 router.main.children 里
-      mapMenuToRoutes(userMenus)
+      const routes = mapMenuToRoutes(userMenus)
+      // console.log(routes)
+      routes.forEach((route) => {
+        router.addRoute('main', route)
+      })
     }
   },
   getters: {},

@@ -26,7 +26,7 @@
             </template>
             <!-- 遍历二级菜单 -->
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.id + ''">
+              <el-menu-item :index="subItem.id + ''" @click="handleMenuItemClick(subItem)">
                 <!-- 二级菜单标题 -->
                 <el-icon v-if="subItem.icon" :class="subItem.icon">
                   <!-- 动态icon组件 -->
@@ -56,6 +56,7 @@
 import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store' //使用自己的useStore
 import { Monitor, Setting, Goods, ChatRound } from '@element-plus/icons'
+import { useRouter } from 'vue-router'
 
 export default defineComponent({
   components: {
@@ -81,9 +82,18 @@ export default defineComponent({
         return icon
       }
     })
+
+    const router = useRouter()
+    const handleMenuItemClick = (item: any) => {
+      // console.log(item)
+      router.push({
+        path: item.url ?? 'not-found' // 此时点击菜单选项，网址栏内容会更改
+      })
+    }
     return {
       userMenus,
-      splitIcon
+      splitIcon,
+      handleMenuItemClick
     }
   }
 })
