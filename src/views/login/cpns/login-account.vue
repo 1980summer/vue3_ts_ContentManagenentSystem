@@ -4,8 +4,8 @@
     <!-- model属性可以拿到最新的值 -->
     <!-- rules之前加冒号，意思是“接收” -->
     <el-form label-width="60px" :rules="rules" :model="account" ref="formRef">
-      <el-form-item label="账号" prop="username">
-        <el-input v-model="account.username" />
+      <el-form-item label="账号" prop="name">
+        <el-input v-model="account.name" />
       </el-form-item>
 
       <el-form-item label="密码" prop="password">
@@ -27,7 +27,7 @@ export default defineComponent({
     const store = useStore()
 
     const account = reactive({
-      username: LocalCache.getItem('username') ?? '',
+      name: LocalCache.getItem('name') ?? '',
       password: LocalCache.getItem('password') ?? ''
     })
 
@@ -40,10 +40,10 @@ export default defineComponent({
           // 1 判断是否勾选了记住密码，如果是就保存账号密码，否则就不保存
           if (isKeepPassword) {
             // 本地缓存
-            LocalCache.setCache('username', account.username)
+            LocalCache.setCache('name', account.name)
             LocalCache.setCache('password', account.password)
           } else {
-            LocalCache.deleteItem('username')
+            LocalCache.deleteItem('name')
             LocalCache.deleteItem('password')
           }
           // 2 开始进行登录验证

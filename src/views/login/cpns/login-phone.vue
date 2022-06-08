@@ -23,6 +23,11 @@ export default defineComponent({
     const phone = reactive({
       phoneNumber: '',
       valiCode: ''
+
+      /**
+       * 手机登录的逻辑： 点击获取验证码按钮就发送网络请求， 服务器返回验证码， 再把手机号和验证码一起发给服务器，
+       * 后端就会验证，通过后就登录成功了
+       */
     })
     return { phone, rules }
   }

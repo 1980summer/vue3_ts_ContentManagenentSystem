@@ -53,7 +53,7 @@ export default defineComponent({
     const isKeepPassword = ref(true)
     const accountRef = ref<InstanceType<typeof LoginAccount>>() // 绑定给LoginAccount组件，用来获取LoginAccount这个组件里的大对象. ref的类型是LoginAccount
     const phoneRef = ref<InstanceType<typeof LoginPhone>>()
-    const currentTab = ref<string>('phone')
+    const currentTab = ref<string>('account')
 
     // 2 定义方法
     const handleLoginClick = () => {
@@ -71,7 +71,7 @@ export default defineComponent({
 <style scoped lang="less">
 .login-panel {
   width: 400px;
-  margin-bottom: 253px;
+  margin-bottom: 100px;
   .title {
     text-align: center;
   }

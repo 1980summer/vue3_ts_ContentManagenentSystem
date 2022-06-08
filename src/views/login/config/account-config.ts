@@ -1,6 +1,6 @@
 // 编写好规则,这个格式遵循 async-validator ，来自element-plus官网
 export const rules = {
-  username: [
+  name: [
     {
       required: true,
       message: '用户名是必传内容',

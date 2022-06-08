@@ -52,19 +52,18 @@ class YXRequest {
     )
     this.instance.interceptors.response.use(
       (res) => {
-        // 将lloading移除
+        // 将ELloading移除
 
-        setTimeout(() => {
-          this.loading?.close()
-        }, 2000)
+        this.loading?.close()
 
         const data = res.data
-        // eslint-disable-next-line no-empty
+
         if (data.returnCode === '-1001') {
+          console.log('请求失败~~')
         } else {
           return data
         }
-        return res.data
+        // return res.data
       },
       (err) => {
         if (err.response.status === 404) {
@@ -95,7 +94,7 @@ class YXRequest {
           if (config.interceptors?.responseInterceptor) {
             res = config.interceptors.responseInterceptor(res)
           }
-          console.log(res)
+          // console.log(res)
 
           // 2 将showLoading设置为true，这样不会影响下一个请求，不然会一直使用上一个请求的配置
           this.showLoading = DEFAULT_LOADING

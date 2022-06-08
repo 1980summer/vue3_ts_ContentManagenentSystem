@@ -5,6 +5,7 @@ const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 
 module.exports = {
   outputDir: './build',
+
   configureWebpack: {
     // resolve 用于配置路径
     resolve: {
@@ -20,19 +21,17 @@ module.exports = {
         resolvers: [ElementPlusResolver()]
       })
     ]
+  },
+  // 解决跨域
+  devServer: {
+    proxy: {
+      '^/api': {
+        target: 'http://152.136.185.210:4000', //映射到这个地址
+        pathRewrite: {
+          '^/api': ''
+        },
+        changeOrigin: true
+      }
+    }
   }
-
-  // configureWebpack: (config) => {
-  //   config.resolve.alias = {
-  //     '@': path.resolve(__dirname, 'src'),
-  //     components: '@/components'
-  //   }
-  // }
-
-  // 3.配置方式三
-  // chainWebpack: (config) => {
-  //   config.resolve.alias
-  //     .set('@', path.resolve(__dirname, 'src'))
-  //     .set('components', '@/components')
-  // }
 }
