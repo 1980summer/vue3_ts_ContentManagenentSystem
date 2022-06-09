@@ -1,31 +1,24 @@
 <template>
   <div class="user">
-    <div class="search">
-      <YxForm v-bind="searchFormConfig" v-model="formData"></YxForm>
-    </div>
+    <div class="search"></div>
+    <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
     <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import YxForm from '@/base-ui/form'
+import PageSearch from '@/components/page-search'
+
 import { searchFormConfig } from './config/serach.config'
 
 export default defineComponent({
   name: 'user',
   components: {
-    YxForm
+    PageSearch
   },
   setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: ''
-    })
-    return { searchFormConfig, formData }
+    return { searchFormConfig }
   }
 })
 </script>

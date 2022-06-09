@@ -1,5 +1,8 @@
 <template>
   <div class="yx-form">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
@@ -41,6 +44,9 @@
         </template>
       </el-row>
     </el-form>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
@@ -50,7 +56,7 @@ import { IFormItem } from '../types'
 
 export default defineComponent({
   props: {
-    moduleValue: {
+    modelValue: {
       type: Object,
       required: true
     },
@@ -79,7 +85,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const formData = ref({ ...props.moduleValue })
+    const formData = ref({ ...props.modelValue }) // 这一步包含了拷贝
     watch(formData, (newValue) => emit('update:modelValue', newValue), {
       deep: true
     })
