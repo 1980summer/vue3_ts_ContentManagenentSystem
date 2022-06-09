@@ -1,14 +1,14 @@
 <template>
   <div class="user">
     <div class="search">
-      <YxForm v-bind="searchFormConfig"></YxForm>
+      <YxForm v-bind="searchFormConfig" v-model="formData"></YxForm>
     </div>
     <div class="content"></div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import YxForm from '@/base-ui/form'
 import { searchFormConfig } from './config/serach.config'
 
@@ -18,7 +18,14 @@ export default defineComponent({
     YxForm
   },
   setup() {
-    return { searchFormConfig }
+    const formData = ref({
+      id: '',
+      name: '',
+      password: '',
+      sport: '',
+      createTime: ''
+    })
+    return { searchFormConfig, formData }
   }
 })
 </script>
