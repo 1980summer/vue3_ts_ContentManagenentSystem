@@ -1,8 +1,15 @@
 <template>
   <div class="yx-table">
-    <el-table :data="useList" border style="width: 100%">
+    <el-table :data="listData" border style="width: 100%">
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center"></el-table-column>
+        <el-table-column v-bind="propItem" align="center">
+          <template #default="scope">
+            <!-- 再通过:row传回去 -->
+            <slot :name="propItem.slotName" :row="scope.row">
+              {{ scope.row[propItem.prop] }}
+            </slot>
+          </template>
+        </el-table-column>
       </template>
     </el-table>
   </div>
