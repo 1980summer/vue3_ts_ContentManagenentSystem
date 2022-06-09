@@ -1,6 +1,7 @@
 import { createRouter, createWebHashHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router' // 加上一个 type 表示这次导入的是一个类型
 import LocalCache from '@/utils/cache'
+import { firstMenu } from '@/utils/map-menus'
 
 //  要求传入routes里的是一个RouteRecordRaw类型， 这是由源码规定的
 
@@ -32,7 +33,7 @@ const router = createRouter({
   history: createWebHashHistory()
 })
 
-//
+// 路由守卫
 router.beforeEach((to) => {
   if (to.path !== '/login') {
     const token = LocalCache.getItem('token')
@@ -41,7 +42,8 @@ router.beforeEach((to) => {
     }
   }
 
-  console.log(router.getRoutes())
-  console.log(to)
+  if (to.path === '/main') {
+    return firstMenu.url
+  }
 })
 export default router

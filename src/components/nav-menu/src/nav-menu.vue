@@ -6,6 +6,7 @@
     </div>
 
     <el-menu
+      :default-active="defaultValue"
       :collapse="collapse"
       class="el-menu-vertical"
       background-color="#0c2135"
@@ -53,10 +54,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref } from 'vue'
 import { useStore } from '@/store' //使用自己的useStore
 import { Monitor, Setting, Goods, ChatRound } from '@element-plus/icons'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
+import { pathMapToMenu } from '@/utils/map-menus'
 
 export default defineComponent({
   components: {
@@ -73,6 +75,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore()
+    const router = useRouter()
+    const route = useRoute()
+    const currentPath = route.path
+
     const userMenus = computed(() => store.state.loginModule.userMenus)
     //对菜单中的 icon 进行处理 因为返回的数据是 el-icon-xx 但是 el-icon需要引入对应组件 所以用动态组件来实现
     const splitIcon = computed(() => {
@@ -83,7 +89,10 @@ export default defineComponent({
       }
     })
 
-    const router = useRouter()
+    // 选中菜单，刷新网页后仍然停在选中菜单的逻辑实现
+    const menu = pathMapToMenu(userMenus.value, currentPath)
+    const defaultValue = ref(menu.id + '')
+
     const handleMenuItemClick = (item: any) => {
       // console.log(item)
       /**
@@ -94,9 +103,11 @@ export default defineComponent({
         path: item.url ?? 'not-found' // 此时点击菜单选项，网址栏内容会更改
       })
     }
+
     return {
       userMenus,
       splitIcon,
+      defaultValue,
       handleMenuItemClick
     }
   }

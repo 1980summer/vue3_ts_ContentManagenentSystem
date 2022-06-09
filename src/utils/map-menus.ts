@@ -1,5 +1,6 @@
-import menu from '@/router/main/system/menu/menu'
 import { RouteRecordRaw } from 'vue-router'
+
+let firstMenu: any = null
 
 export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   const routes: RouteRecordRaw[] = []
@@ -26,6 +27,9 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
           return route.path === menu.url // 条件
         })
         if (route) routes.push(route)
+        if (!firstMenu) {
+          firstMenu = menu // 赋第一个找到的值
+        }
       } else {
         _recurseGetRoutes(menu.children)
       }
@@ -35,4 +39,17 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
 
   return routes
 }
+
+export function pathMapToMenu(userMenu: any[], currentPath: string): any {
+  for (const menu of userMenu) {
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath)
+      if (findMenu) return findMenu
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      return menu
+    }
+  }
+}
+
+export { firstMenu }
 //
