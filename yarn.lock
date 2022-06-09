@@ -2929,6 +2929,13 @@
   "resolved" "https://registry.npmmirror.com/commander/-/commander-8.3.0.tgz"
   "version" "8.3.0"
 
+"commander@~1.1.1":
+  "integrity" "sha512-71Rod2AhcH3JhkBikVpNd0pA+fWsmAaVoti6OR38T76chA7vE3pSerS0Jor4wDw+tOueD2zLVvFOw5H0Rcj7rA=="
+  "resolved" "https://registry.npmmirror.com/commander/-/commander-1.1.1.tgz"
+  "version" "1.1.1"
+  dependencies:
+    "keypress" "0.1.x"
+
 "commitizen@^4.0.3", "commitizen@^4.2.4":
   "integrity" "sha512-LlZChbDzg3Ir3O2S7jSo/cgWp5/QwylQVr59K4xayVq8S4/RdKzSyJkghAiZZHfhh5t4pxunUoyeg0ml1q/7aw=="
   "resolved" "https://registry.npmmirror.com/commitizen/-/commitizen-4.2.4.tgz"
@@ -3327,6 +3334,11 @@
   "integrity" "sha512-2iy1EkLdlBzQGvbweYRFxmFath8+K7+AKB0TlhHWkNuH+TmovaMH/Wp7V7R4u7f4SnX3OgLsU9t1NI9ioDnUpg=="
   "resolved" "https://registry.npmmirror.com/dargs/-/dargs-7.0.0.tgz"
   "version" "7.0.0"
+
+"day@^0.0.2":
+  "integrity" "sha512-o889G1KUU4sX0+qd5g0JMGJV0MR7Kv89//yDe72ySr8dMdQH+dglY5KqCE3iy8uJs56RRerYv7WqY/AXpoMNzw=="
+  "resolved" "https://registry.npmmirror.com/day/-/day-0.0.2.tgz"
+  "version" "0.0.2"
 
 "dayjs@^1.11.1":
   "integrity" "sha512-F4LXf1OeU9hrSYRPTTj/6FbO4HTjPKXvEIC1P2kcnFurViINCVk3ZV0xAS3XVx9MkMsXbbqlK6hjseaYbgKEHw=="
@@ -4890,6 +4902,13 @@
     "argparse" "^1.0.7"
     "esprima" "^4.0.0"
 
+"js@^0.1.0":
+  "integrity" "sha512-ZBbGYOpact8QAH9RprFWL4RAESYwbDodxiuDjOnzwzzk9pBzKycoifGuUrHHcDixE/eLMKPHRaXenTgu1qXBqA=="
+  "resolved" "https://registry.npmmirror.com/js/-/js-0.1.0.tgz"
+  "version" "0.1.0"
+  dependencies:
+    "commander" "~1.1.1"
+
 "jsesc@^2.5.1":
   "integrity" "sha512-OYu7XEzjkCQ3C5Ps3QIZsQfNpqoJyZZA99wd9aWd05NCtC5pWOkShK2mkL6HXQR6/Cy2lbNdPlZBpuQHXE63gA=="
   "resolved" "https://registry.npmmirror.com/jsesc/-/jsesc-2.5.2.tgz"
@@ -4970,6 +4989,11 @@
   dependencies:
     "jsonparse" "^1.2.0"
     "through" ">=2.2.7 <3"
+
+"keypress@0.1.x":
+  "integrity" "sha512-x0yf9PL/nx9Nw9oLL8ZVErFAk85/lslwEP7Vz7s5SI1ODXZIgit3C5qyWjw4DxOuO/3Hb4866SQh28a1V1d+WA=="
+  "resolved" "https://registry.npmmirror.com/keypress/-/keypress-0.1.0.tgz"
+  "version" "0.1.0"
 
 "kind-of@^6.0.2", "kind-of@^6.0.3":
   "integrity" "sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw=="
