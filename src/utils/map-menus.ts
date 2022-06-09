@@ -6,9 +6,9 @@ export function mapMenuToRoutes(userMenus: any[]): RouteRecordRaw[] {
   // 1 先去加载默认所有的routes
 
   const allRoutes: RouteRecordRaw[] = []
-  // require.context这个工具可以加载文件夹里的文件，是webpaack内置的，
+  // require.context这个工具可以加载文件夹里的文件，是webpaack内置的，最后会得到一个对象
   // 三个参数： （路径， 是否递归多层文件夹， 何种格式的文件）
-  const routesFiles = require.context('../router/main', true, /\.ts/) // 得到一个对象
+  const routesFiles = require.context('../router/main', true, /\.ts/)
   routesFiles.keys().forEach((key) => {
     // 加载某个具体的文件
     const route = require('../router/main' + key.split('.')[1])

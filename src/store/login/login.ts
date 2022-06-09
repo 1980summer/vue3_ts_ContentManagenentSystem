@@ -34,7 +34,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       const routes = mapMenuToRoutes(userMenus)
       // console.log(routes)
       routes.forEach((route) => {
-        router.addRoute('main', route)
+        router.addRoute('main', route) // addRoute 是一个方法：把新的路由作为child添加到已存在的路由上
       })
     }
   },

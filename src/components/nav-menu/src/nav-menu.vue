@@ -86,6 +86,10 @@ export default defineComponent({
     const router = useRouter()
     const handleMenuItemClick = (item: any) => {
       // console.log(item)
+      /**
+       * 想要导航到不同的 URL，使用 router.push 方法。这个方法会向 history 栈添加一个新记录，
+       * 所以，当用户点击浏览器后退按钮时，可以返回到之前的 URL。
+       */
       router.push({
         path: item.url ?? 'not-found' // 此时点击菜单选项，网址栏内容会更改
       })

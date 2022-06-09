@@ -11,7 +11,7 @@ import 'element-plus/theme-chalk/el-loading.css' // 引入对应样式，ELLodin
 const app = createApp(App)
 
 app.use(store)
+setupStore() // 只要项目跑起来就会调用这个方法
 app.use(router)
 
-setupStore() // 只要项目跑起来就会调用这个方法
 app.mount('#app')
