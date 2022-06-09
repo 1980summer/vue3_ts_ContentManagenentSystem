@@ -7,7 +7,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
+import { useStore } from 'vuex'
 import PageSearch from '@/components/page-search'
 
 import { searchFormConfig } from './config/serach.config'
@@ -18,6 +19,14 @@ export default defineComponent({
     PageSearch
   },
   setup() {
+    const store = useStore()
+    store.dispatch('systemModule/getPageListAction', {
+      pageUrl: 'users/list',
+      queryInfo: {
+        offset: 0,
+        size: 10
+      }
+    })
     return { searchFormConfig }
   }
 })

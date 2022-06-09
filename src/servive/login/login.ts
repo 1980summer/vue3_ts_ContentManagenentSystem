@@ -1,5 +1,6 @@
 import yxRequest from '..'
-import { IAccount, IDatatype, IloginResult } from './types'
+import { IAccount, IloginResult } from './types'
+import { IDatatype } from '../types'
 
 enum LoginAPI {
   AccountLogin = '/login',
