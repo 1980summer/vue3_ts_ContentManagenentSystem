@@ -9,7 +9,14 @@
         :propList="propList"
         :showIndexColumn="showIndexColumn"
         :showSelectColumn="showSelectColumn"
+        :title="title"
       >
+        <!-- 1 header中的插槽 -->
+        <template #headerHandler>
+          <el-button type="primary">新建用户</el-button>
+        </template>
+
+        <!-- 2 列中的插槽 -->
         <template #status="scope">
           <el-button plain size="small" :type="scope.row.enable ? 'success' : 'danger'">
             {{ scope.row.enable ? '启用' : '禁用' }}
@@ -37,6 +44,9 @@
             </el-link>
           </div>
         </template>
+
+        <!-- 3 footer中的插槽 -->
+        <template #footer> </template>
       </YxTable>
     </div>
   </div>
@@ -88,7 +98,9 @@ export default defineComponent({
     const showIndexColumn = true // 是否显示序号
     const showSelectColumn = true // 是否显示可选按钮
 
-    return { searchFormConfig, useList, propList, showIndexColumn, showSelectColumn }
+    const title = '用户列表'
+
+    return { searchFormConfig, useList, propList, showIndexColumn, showSelectColumn, title }
   }
 })
 </script>

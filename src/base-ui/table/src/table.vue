@@ -1,5 +1,14 @@
 <template>
   <div class="yx-table">
+    <div class="header">
+      <slot name="header">
+        <div class="title">{{ title }}</div>
+        <div class="handler">
+          <slot name="headerHandler"></slot>
+        </div>
+      </slot>
+    </div>
+
     <el-table :data="listData" border style="width: 100%" @selection-change="handleSelectionChange">
       <!-- 增加一列显示可选按钮 -->
       <el-table-column v-if="showSelectColumn" type="selection" align="center" width="60">
@@ -18,6 +27,25 @@
         </el-table-column>
       </template>
     </el-table>
+
+    <div class="footer">
+      <slot name="footer">
+        <div class="demo-pagination-block">
+          <el-pagination
+            v-model:currentPage="currentPage4"
+            v-model:page-size="pageSize4"
+            :page-sizes="[100, 200, 300, 400]"
+            :small="small"
+            :disabled="disabled"
+            :background="background"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="400"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -26,6 +54,10 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     listData: {
       type: Array,
       required: true
@@ -58,4 +90,29 @@ export default defineComponent({
 })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.header {
+  display: flex;
+  height: 45px;
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .handler {
+    align-items: center;
+  }
+}
+
+.footer {
+  margin-top: 15px;
+
+  .demo-pagination-block {
+    margin-left: 538px;
+  }
+}
+</style>
