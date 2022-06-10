@@ -6,7 +6,7 @@
       </template>
       <template #footer>
         <div class="handle-btn">
-          <el-button>
+          <el-button @click="handleResetClick">
             <el-icon><Refresh /></el-icon>
             重置
           </el-button>
@@ -38,15 +38,23 @@ export default defineComponent({
 
     YxForm
   },
-  setup() {
-    const formData = ref({
-      id: '',
-      name: '',
-      password: '',
-      sport: '',
-      createTime: ''
-    })
-    return { formData }
+  setup(props) {
+    // 双向绑定的属性应该是由配置文件的field来决定的
+    // 1 优化一 formData中的属性应该动态来决定
+    const formItems = props.searchFormConfig?.formItems ?? []
+    const formOriginData: any = {}
+    for (const item of formItems) {
+      formOriginData[item.field] = '' // 默认值是一个空串
+    }
+
+    const formData = ref(formOriginData)
+
+    // 2 优化二： 当用户点击重置
+    const handleResetClick = () => {
+      formData.value = formOriginData
+    }
+
+    return { formData, handleResetClick }
   }
 })
 </script>
