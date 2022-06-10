@@ -1,6 +1,6 @@
 <template>
   <div class="page-content">
-    <YxTable :listData="userList" v-bind="contentTableConfig">
+    <YxTable :listData="dataList" v-bind="contentTableConfig">
       <!-- 1 header中的插槽 -->
       <template #headerHandler>
         <el-button type="primary">新建用户</el-button>
@@ -51,7 +51,11 @@ export default defineComponent({
   props: {
     contentTableConfig: {
       type: Object,
-      require: true
+      required: true
+    },
+    pageName: {
+      type: String,
+      required: true
     }
   },
   components: {
@@ -60,22 +64,22 @@ export default defineComponent({
 
     YxTable
   },
-  setup() {
+  setup(props) {
     const store = useStore()
 
     // 发送请求
     store.dispatch('systemModule/getPageListAction', {
-      pageUrl: 'users/list',
+      pageName: props.pageName,
       queryInfo: {
         offset: 0,
         size: 10
       }
     })
 
-    const userList = computed(() => store.state.systemModule.userList)
-    const userCount = computed(() => store.state.systemModule.userCount)
+    const dataList = computed(() => store.getters[`systemModule/pageListData`](props.pageName)) // 调用函数并传入参数
+    // const userCount = computed(() => store.state.systemModule.userCount)
 
-    return { userList }
+    return { dataList }
   }
 })
 </script>
