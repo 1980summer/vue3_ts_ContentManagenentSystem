@@ -4,7 +4,12 @@
     <PageSearch :searchFormConfig="searchFormConfig"></PageSearch>
 
     <div class="content">
-      <YxTable :listData="useList" :propList="propList">
+      <YxTable
+        :listData="useList"
+        :propList="propList"
+        :showIndexColumn="showIndexColumn"
+        :showSelectColumn="showSelectColumn"
+      >
         <template #status="scope">
           <el-button plain size="small" :type="scope.row.enable ? 'success' : 'danger'">
             {{ scope.row.enable ? '启用' : '禁用' }}
@@ -18,6 +23,20 @@
         <template #updateAt="scope">
           <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
         </template>
+
+        <template #handler>
+          <div class="handle-btns">
+            <el-link type="primary" class="edit">
+              <el-icon><Edit /></el-icon>
+              编辑
+            </el-link>
+            <el-link type="danger" class="del">
+              <el-icon><Delete /></el-icon>
+
+              删除
+            </el-link>
+          </div>
+        </template>
       </YxTable>
     </div>
   </div>
@@ -28,12 +47,16 @@ import { defineComponent, computed } from 'vue'
 import { useStore } from '@/store'
 import PageSearch from '@/components/page-search'
 import YxTable from '@/base-ui/table'
+import { Edit, Delete } from '@element-plus/icons'
 
 import { searchFormConfig } from './config/serach.config'
 
 export default defineComponent({
   name: 'user',
   components: {
+    Edit,
+    Delete,
+
     PageSearch,
     YxTable
   },
@@ -55,13 +78,17 @@ export default defineComponent({
     const propList = [
       { prop: 'name', label: '用户名', minWidth: '100' },
       { prop: 'realname', label: '真实姓名', minWidth: '100' },
-      { prop: 'cellphone', label: '手机号码', minWidth: '100' },
+      { prop: 'cellphone', label: '手机号码', minWidth: '150' },
       { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
       { prop: 'createAt', label: '创建时间', minWidth: '250', slotName: 'createAt' },
-      { prop: 'updateAt', label: '更新时间', minWidth: '250', slotName: 'updateAt' }
+      { prop: 'updateAt', label: '更新时间', minWidth: '250', slotName: 'updateAt' },
+      { label: '操作', minWidth: '120', slotName: 'handler' }
     ]
 
-    return { searchFormConfig, useList, propList }
+    const showIndexColumn = true // 是否显示序号
+    const showSelectColumn = true // 是否显示可选按钮
+
+    return { searchFormConfig, useList, propList, showIndexColumn, showSelectColumn }
   }
 })
 </script>
@@ -70,5 +97,10 @@ export default defineComponent({
 .content {
   padding: 40px;
   border-top: solid 1px #f5f5f5;
+  .handle-btns {
+    .edit {
+      margin-right: 12px;
+    }
+  }
 }
 </style>
