@@ -67,19 +67,25 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
-    // 发送请求
-    store.dispatch('systemModule/getPageListAction', {
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    })
+    // 发送网络请求
+    const getPageData = (queryInfo: any = {}) => {
+      // 如果没有参数就默认给个空对象
+      store.dispatch('systemModule/getPageListAction', {
+        pageName: props.pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10,
+          ...queryInfo
+        }
+      })
+    }
+    getPageData()
 
+    // 从vuex中获取值
     const dataList = computed(() => store.getters[`systemModule/pageListData`](props.pageName)) // 调用函数并传入参数
     // const userCount = computed(() => store.state.systemModule.userCount)
 
-    return { dataList }
+    return { dataList, getPageData }
   }
 })
 </script>
