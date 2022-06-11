@@ -11,6 +11,8 @@
       :contentTableConfig="contentTableConfig"
       pageName="users"
     ></PageContent>
+
+    <PageModal :modalConfig="modalConfig"></PageModal>
   </div>
 </template>
 
@@ -18,9 +20,11 @@
 import { defineComponent, ref } from 'vue'
 import PageSearch from '@/components/page-search'
 import PageContent from '@/components/page-content'
+import PageModal from '@/components/page-modal'
 
 import { searchFormConfig } from './config/serach.config'
 import { contentTableConfig } from './config/content-config'
+import { modalConfig } from './config/modal.config'
 
 import { usePageSearch } from '@/hooks/usePageSearch'
 
@@ -28,7 +32,8 @@ export default defineComponent({
   name: 'users',
   components: {
     PageSearch,
-    PageContent
+    PageContent,
+    PageModal
   },
   setup() {
     const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
@@ -38,7 +43,9 @@ export default defineComponent({
       contentTableConfig,
       handleResetClick,
       handleQueryClick,
-      pageContentRef
+      pageContentRef,
+
+      modalConfig
     }
   }
 })
