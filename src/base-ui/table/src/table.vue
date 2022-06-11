@@ -16,8 +16,9 @@
       <!-- 增加一列显示序号 -->
       <el-table-column v-if="showIndexColumn" type="index" label="序号" align="center" width="60">
       </el-table-column>
+      <!--  -->
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <!-- 再通过:row传回去 -->
             <slot :name="propItem.slotName" :row="scope.row">

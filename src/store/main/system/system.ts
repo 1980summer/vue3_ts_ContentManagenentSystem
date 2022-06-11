@@ -10,7 +10,9 @@ const systemModule: Module<ISystemState, IRootState> = {
       usersList: [],
       usersCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0
     }
   },
   mutations: {
@@ -25,6 +27,12 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, count: number) {
       state.roleCount = count
+    },
+    changeGoodsList(state, list: any[]) {
+      state.goodsList = list
+    },
+    changeGoodsCount(state, count: number) {
+      state.goodsCount = count
     }
   },
   getters: {
@@ -44,14 +52,6 @@ const systemModule: Module<ISystemState, IRootState> = {
       // 1 获取对应pageUrl
       const pageName = payload.pageName
       const pageUrl = `/${pageName}/list`
-      // switch (pageName) {
-      //   case 'users':
-      //     pageUrl = '/users/list'
-      //     break
-      //   case 'role':
-      //     pageUrl = '/role/list'
-      //     break
-      // }
 
       // 2 对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
@@ -63,16 +63,6 @@ const systemModule: Module<ISystemState, IRootState> = {
 
       commit(`change${upperPageName}List`, list)
       commit(`change${upperPageName}Count`, totalCount)
-
-      // switch (pageName) {
-      //   case 'users':
-      //     commit('changeUserList', list)
-      //     commit('changeUserCount', totalCount)
-      //     break
-      //   case 'role':
-      //     commit('changeRoleList', list)
-      //     commit('changeRoleCount', totalCount)
-      // }
     }
   }
 }
