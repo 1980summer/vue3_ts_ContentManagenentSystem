@@ -9,7 +9,13 @@
       </slot>
     </div>
 
-    <el-table :data="listData" border style="width: 100%" @selection-change="handleSelectionChange">
+    <el-table
+      :data="listData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+      v-bind="childrenProps"
+    >
       <!-- 增加一列显示可选按钮 -->
       <el-table-column v-if="showSelectColumn" type="selection" align="center" width="60">
       </el-table-column>
@@ -29,7 +35,7 @@
       </template>
     </el-table>
 
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <div class="demo-pagination-block">
           <el-pagination
@@ -79,6 +85,15 @@ export default defineComponent({
     page: {
       type: Object,
       default: () => ({ currentPage: 0, pageSize: 10 })
+    },
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
+    showFooter: {
+      // 是否显示分页器
+      type: Boolean,
+      default: true
     }
   },
   emits: ['selectionChange', 'update:page'],
