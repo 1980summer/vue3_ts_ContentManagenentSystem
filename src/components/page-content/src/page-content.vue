@@ -1,6 +1,11 @@
 <template>
   <div class="page-content">
-    <YxTable :listData="dataList" v-bind="contentTableConfig">
+    <YxTable
+      :listData="dataList"
+      v-bind="contentTableConfig"
+      :listCount="dataCount"
+      v-model:page="pageInfo"
+    >
       <!-- 1 header中的插槽 -->
       <template #headerHandler>
         <el-button type="primary">新建用户</el-button>
@@ -42,7 +47,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
+import { defineComponent, computed, ref, watch } from 'vue'
 import YxTable from '@/base-ui/table'
 import { Edit, Delete } from '@element-plus/icons'
 import { useStore } from '@/store'
@@ -67,14 +72,18 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
+    // 双向绑定pageInfo
+    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    watch(pageInfo, () => getPageData())
+
     // 发送网络请求
     const getPageData = (queryInfo: any = {}) => {
       // 如果没有参数就默认给个空对象
       store.dispatch('systemModule/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
-          offset: 0,
-          size: 10,
+          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
           ...queryInfo
         }
       })
@@ -83,9 +92,15 @@ export default defineComponent({
 
     // 从vuex中获取值
     const dataList = computed(() => store.getters[`systemModule/pageListData`](props.pageName)) // 调用函数并传入参数
-    // const userCount = computed(() => store.state.systemModule.userCount)
 
-    return { dataList, getPageData }
+    const dataCount = computed(() => store.getters[`systemModule/pageListCount`](props.pageName))
+
+    return {
+      dataList,
+      getPageData,
+      dataCount,
+      pageInfo
+    }
   }
 })
 </script>

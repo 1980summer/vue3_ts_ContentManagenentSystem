@@ -32,16 +32,13 @@
       <slot name="footer">
         <div class="demo-pagination-block">
           <el-pagination
-            v-model:currentPage="currentPage4"
-            v-model:page-size="pageSize4"
-            :page-sizes="[100, 200, 300, 400]"
-            :small="small"
-            :disabled="disabled"
-            :background="background"
-            layout="total, sizes, prev, pager, next, jumper"
-            :total="400"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
+            v-model:currentPage="page.currentPage"
+            v-model:page-size="page.pageSize"
+            :total="listCount"
+            :page-sizes="[10, 20, 30]"
+            layout="total, sizes, prev, pager, next, jumper"
           />
         </div>
       </slot>
@@ -62,6 +59,10 @@ export default defineComponent({
       type: Array,
       required: true
     },
+    listCount: {
+      type: Number,
+      default: 0
+    },
     propList: {
       type: Array,
       required: true
@@ -73,18 +74,32 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 })
     }
   },
-  emits: ['selectionChange'],
-  setup(prop, { emit }) {
+  emits: ['selectionChange', 'update:page'],
+  setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
       // 点击选中的那条数据的函数处理
       // console.log(value)
       emit('selectionChange', value)
     }
 
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
+    }
+
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
+    }
+
     return {
-      handleSelectionChange
+      handleSelectionChange,
+      handleSizeChange,
+      handleCurrentChange
     }
   }
 })

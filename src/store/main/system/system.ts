@@ -31,15 +31,11 @@ const systemModule: Module<ISystemState, IRootState> = {
     pageListData(state) {
       return (pageName: string) => {
         return (state as any)[`${pageName}List`]
-        // 如果后端的接口的url比较没有规律，就是用switch
-        // switch (pageName) {
-        //   case 'users':
-        //     return state.usersList
-        //     break
-        //   case 'role':
-        //     return state.roleList
-        //     break
-        // }
+      }
+    },
+    pageListCount(state) {
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
       }
     }
   },
