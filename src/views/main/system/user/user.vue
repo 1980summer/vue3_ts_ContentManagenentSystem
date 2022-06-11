@@ -44,8 +44,24 @@ export default defineComponent({
   },
   setup() {
     const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
+
+    // pageModal的相关处理逻辑
+    const newCallback = () => {
+      // 找出有password的那一条， 用find函数
+      const passwordItem = modalConfig.formItems.find(
+        (item) => item.field === 'password'
+      )
+      passwordItem!.isHidden = false
+    }
+    const editCallback = () => {
+      const passwordItem = modalConfig.formItems.find(
+        (item) => item.field === 'password'
+      )
+      passwordItem!.isHidden = true
+    }
+
     const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
-      usePageModal()
+      usePageModal(newCallback, editCallback)
 
     return {
       searchFormConfig,

@@ -8,8 +8,14 @@
         <template v-for="item in formItems" :key="item.label">
           <!-- v-bind可以绑定所有属性 -->
           <el-col v-bind="colLayout">
-            <el-form-item :label="item.label" :style="itemStyle">
-              <template v-if="item.type === 'input' || item.type === 'password'">
+            <el-form-item
+              :label="item.label"
+              :style="itemStyle"
+              v-if="!item.isHidden"
+            >
+              <template
+                v-if="item.type === 'input' || item.type === 'password'"
+              >
                 <el-input
                   :placeholder="item.placeholder"
                   :show-password="item.type === 'password'"

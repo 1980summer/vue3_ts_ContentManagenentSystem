@@ -27,7 +27,10 @@
             </template>
             <!-- 遍历二级菜单 -->
             <template v-for="subItem in item.children" :key="subItem.id">
-              <el-menu-item :index="subItem.id + ''" @click="handleMenuItemClick(subItem)">
+              <el-menu-item
+                :index="subItem.id + ''"
+                @click="handleMenuItemClick(subItem)"
+              >
                 <!-- 二级菜单标题 -->
                 <el-icon v-if="subItem.icon" :class="subItem.icon">
                   <!-- 动态icon组件 -->

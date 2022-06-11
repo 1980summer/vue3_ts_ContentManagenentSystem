@@ -1,7 +1,10 @@
 <template>
   <div class="nav-header">
     <el-icon class="fold-menu"
-      ><component :is="isFold ? 'Fold' : 'Expand'" @click="handleFoldClick"></component
+      ><component
+        :is="isFold ? 'Fold' : 'Expand'"
+        @click="handleFoldClick"
+      ></component
     ></el-icon>
     <div class="content">
       <div class="div">

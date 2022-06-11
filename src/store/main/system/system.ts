@@ -67,7 +67,8 @@ const systemModule: Module<ISystemState, IRootState> = {
       console.log(pageResult)
       const { list, totalCount } = pageResult.data
       // 首字母大写
-      const upperPageName = (pageName.slice(0, 1) as string).toUpperCase() + pageName.slice(1)
+      const upperPageName =
+        (pageName.slice(0, 1) as string).toUpperCase() + pageName.slice(1)
 
       commit(`change${upperPageName}List`, list)
       commit(`change${upperPageName}Count`, totalCount)

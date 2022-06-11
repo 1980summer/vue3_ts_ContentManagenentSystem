@@ -17,10 +17,21 @@
       v-bind="childrenProps"
     >
       <!-- 增加一列显示可选按钮 -->
-      <el-table-column v-if="showSelectColumn" type="selection" align="center" width="60">
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
+      >
       </el-table-column>
       <!-- 增加一列显示序号 -->
-      <el-table-column v-if="showIndexColumn" type="index" label="序号" align="center" width="60">
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        align="center"
+        width="60"
+      >
       </el-table-column>
       <!--  -->
       <template v-for="propItem in propList" :key="propItem.prop">

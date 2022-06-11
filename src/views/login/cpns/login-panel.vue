@@ -2,7 +2,12 @@
   <div class="login-panel">
     <div class="title">
       <h1>后台管理系统</h1>
-      <el-tabs type="border-card" class="demo-tabs" stretch v-model="currentTab">
+      <el-tabs
+        type="border-card"
+        class="demo-tabs"
+        stretch
+        v-model="currentTab"
+      >
         <el-tab-pane name="account">
           <template #label>
             <span class="custom-tabs-label">
@@ -26,11 +31,15 @@
       </el-tabs>
 
       <div class="account-control">
-        <el-checkbox v-model="isKeepPassword" class="remember">记住密码</el-checkbox>
+        <el-checkbox v-model="isKeepPassword" class="remember"
+          >记住密码</el-checkbox
+        >
         <el-link type="primary" class="forget">忘记密码</el-link>
       </div>
 
-      <el-button type="primary" class="login-btn" @click="handleLoginClick">立即登录</el-button>
+      <el-button type="primary" class="login-btn" @click="handleLoginClick"
+        >立即登录</el-button
+      >
     </div>
   </div>
 </template>
