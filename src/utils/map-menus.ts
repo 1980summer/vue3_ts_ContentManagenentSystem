@@ -95,5 +95,22 @@ export function pathMapToMenu(
 //   }
 // }
 
+export function mapMenuToPermissions(userMenus: any[]) {
+  const permissions: string[] = []
+
+  const _recurseGetPermission = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission) // 拿到对应菜单的permission属性
+      }
+    }
+  }
+  _recurseGetPermission(userMenus)
+
+  return permissions
+}
+
 export { firstMenu }
 //

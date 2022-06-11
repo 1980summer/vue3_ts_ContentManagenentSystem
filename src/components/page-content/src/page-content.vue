@@ -8,7 +8,7 @@
     >
       <!-- 1 header中的插槽 -->
       <template #headerHandler>
-        <el-button type="primary">新建用户</el-button>
+        <el-button type="primary" v-if="isCreate">新建用户</el-button>
       </template>
 
       <!-- 2 列中的插槽 -->
@@ -28,11 +28,11 @@
 
       <template #handler>
         <div class="handle-btns">
-          <el-link type="primary" class="edit">
+          <el-link type="primary" class="edit" v-if="isUpdate">
             <el-icon><Edit /></el-icon>
             编辑
           </el-link>
-          <el-link type="danger" class="del">
+          <el-link type="danger" class="del" v-if="isDelete">
             <el-icon><Delete /></el-icon>
 
             删除
@@ -58,6 +58,7 @@ import { defineComponent, computed, ref, watch } from 'vue'
 import YxTable from '@/base-ui/table'
 import { Edit, Delete } from '@element-plus/icons'
 import { useStore } from '@/store'
+import { usePermission } from '@/hooks/usePermission'
 
 export default defineComponent({
   props: {
@@ -79,13 +80,19 @@ export default defineComponent({
   setup(props) {
     const store = useStore()
 
+    // 0 获取菜单操作的权限
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
+
     // 1 双向绑定pageInfo
     const pageInfo = ref({ currentPage: 0, pageSize: 10 })
     watch(pageInfo, () => getPageData())
 
     // 2 发送网络请求
     const getPageData = (queryInfo: any = {}) => {
-      // 如果没有参数就默认给个空对象
+      if (!isQuery) return // 如果没有查询权限， 就return
       store.dispatch('systemModule/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
@@ -118,7 +125,10 @@ export default defineComponent({
       getPageData,
       dataCount,
       pageInfo,
-      otherPropSlots
+      otherPropSlots,
+      isCreate,
+      isUpdate,
+      isDelete
     }
   }
 })

@@ -9,7 +9,7 @@ import {
 import { IAccount } from '@/servive/login/types'
 import LocalCache from '@/utils/cache'
 import router from '@/router'
-import { mapMenuToRoutes } from '@/utils/map-menus'
+import { mapMenuToRoutes, mapMenuToPermissions } from '@/utils/map-menus'
 
 const loginModule: Module<ILoginState, IRootState> = {
   namespaced: true,
@@ -17,7 +17,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     }
   },
   mutations: {
@@ -36,6 +37,11 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route) // addRoute 是一个方法：把新的路由作为child添加到已存在的路由上
       })
+
+      // 获取用户菜单权限
+      const permission = mapMenuToPermissions(userMenus)
+      // console.log(permission)
+      state.permissions = permission
     }
   },
   getters: {},
