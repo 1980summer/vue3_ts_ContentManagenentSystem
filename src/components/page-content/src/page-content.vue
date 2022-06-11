@@ -26,13 +26,13 @@
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
 
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
           <el-link type="primary" class="edit" v-if="isUpdate">
             <el-icon><Edit /></el-icon>
             编辑
           </el-link>
-          <el-link type="danger" class="del" v-if="isDelete">
+          <el-link type="danger" class="del" v-if="isDelete" @click="handleDeleteClick(scope.row)">
             <el-icon><Delete /></el-icon>
 
             删除
@@ -87,7 +87,7 @@ export default defineComponent({
     const isQuery = usePermission(props.pageName, 'query')
 
     // 1 双向绑定pageInfo
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     watch(pageInfo, () => getPageData())
 
     // 2 发送网络请求
@@ -96,7 +96,7 @@ export default defineComponent({
       store.dispatch('systemModule/getPageListAction', {
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -120,6 +120,14 @@ export default defineComponent({
       return true // 其他的就return true，就会被命中
     })
 
+    // 5 删除、编辑、新建操作
+    const handleDeleteClick = (item: any) => {
+      store.dispatch('systemModule/deletePageDataAction', {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+
     return {
       dataList,
       getPageData,
@@ -128,7 +136,8 @@ export default defineComponent({
       otherPropSlots,
       isCreate,
       isUpdate,
-      isDelete
+      isDelete,
+      handleDeleteClick
     }
   }
 })
