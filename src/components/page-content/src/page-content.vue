@@ -8,12 +8,18 @@
     >
       <!-- 1 header中的插槽 -->
       <template #headerHandler>
-        <el-button type="primary" v-if="isCreate">新建用户</el-button>
+        <el-button type="primary" v-if="isCreate" @click="handleNewClick">
+          新建用户
+        </el-button>
       </template>
 
       <!-- 2 列中的插槽 -->
       <template #status="scope">
-        <el-button plain size="small" :type="scope.row.enable ? 'success' : 'danger'">
+        <el-button
+          plain
+          size="small"
+          :type="scope.row.enable ? 'success' : 'danger'"
+        >
           {{ scope.row.enable ? '启用' : '禁用' }}
         </el-button>
       </template>
@@ -28,11 +34,21 @@
 
       <template #handler="scope">
         <div class="handle-btns">
-          <el-link type="primary" class="edit" v-if="isUpdate">
+          <el-link
+            type="primary"
+            class="edit"
+            v-if="isUpdate"
+            @click="handleEditClick(scope.row)"
+          >
             <el-icon><Edit /></el-icon>
             编辑
           </el-link>
-          <el-link type="danger" class="del" v-if="isDelete" @click="handleDeleteClick(scope.row)">
+          <el-link
+            type="danger"
+            class="del"
+            v-if="isDelete"
+            @click="handleDeleteClick(scope.row)"
+          >
             <el-icon><Delete /></el-icon>
 
             删除
@@ -41,7 +57,11 @@
       </template>
 
       <!-- 4 剩余的动态插槽 -->
-      <template v-for="item in otherPropSlots" :key="item.prop" #[item.slotName]="scope">
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
         <template v-if="item.slotName">
           <slot :name="item.slotName" :row="scope.row"></slot>
         </template>
@@ -77,7 +97,8 @@ export default defineComponent({
 
     YxTable
   },
-  setup(props) {
+  emits: ['newBtnClick', 'editBtnClick'],
+  setup(props, { emit }) {
     const store = useStore()
 
     // 0 获取菜单操作的权限
@@ -105,20 +126,27 @@ export default defineComponent({
     getPageData()
 
     // 3 从vuex中获取值
-    const dataList = computed(() => store.getters[`systemModule/pageListData`](props.pageName)) // 调用函数并传入参数
+    const dataList = computed(() =>
+      store.getters[`systemModule/pageListData`](props.pageName)
+    ) // 调用函数并传入参数
 
-    const dataCount = computed(() => store.getters[`systemModule/pageListCount`](props.pageName))
+    const dataCount = computed(() =>
+      store.getters[`systemModule/pageListCount`](props.pageName)
+    )
 
     // 4 获取其他的动态插槽名称
-    const otherPropSlots = props.contentTableConfig?.propList.filter((item: any) => {
-      // 如果是false就会被过滤出去
-      if (item.slotName === 'status') return false
-      if (item.slotName === 'createAt') return false
-      if (item.slotName === 'updateAt') return false
-      if (item.slotName === 'handler') return false
+    // eslint-disable-next-line prettier/prettier
+    const otherPropSlots = props.contentTableConfig?.propList.filter(
+      (item: any) => {
+        // 如果是false就会被过滤出去
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
 
-      return true // 其他的就return true，就会被命中
-    })
+        return true // 其他的就return true，就会被命中
+      }
+    )
 
     // 5 删除、编辑、新建操作
     const handleDeleteClick = (item: any) => {
@@ -126,6 +154,13 @@ export default defineComponent({
         pageName: props.pageName,
         id: item.id
       })
+    }
+    const handleNewClick = () => {
+      emit('newBtnClick')
+    }
+
+    const handleEditClick = (item: any) => {
+      emit('editBtnClick', item)
     }
 
     return {
@@ -137,7 +172,9 @@ export default defineComponent({
       isCreate,
       isUpdate,
       isDelete,
-      handleDeleteClick
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick
     }
   }
 })

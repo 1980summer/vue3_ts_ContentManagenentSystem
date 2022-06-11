@@ -4,8 +4,10 @@
       <Yxform v-bind="modalConfig" v-model="formData"></Yxform>
       <template #footer>
         <span class="dialog-footer">
-          <el-button @click="dialogVisible = false">Cancel</el-button>
-          <el-button type="primary" @click="dialogVisible = false">Confirm</el-button>
+          <el-button @click="dialogVisible = false">取消</el-button>
+          <el-button type="primary" @click="dialogVisible = false"
+            >确认</el-button
+          >
         </span>
       </template>
     </el-dialog>
@@ -13,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import Yxform from '@/base-ui/form'
 
 export default defineComponent({
@@ -21,14 +23,27 @@ export default defineComponent({
     modalConfig: {
       type: Object,
       required: true
+    },
+    defaultInfo: {
+      type: Object,
+      default: () => ({}) // 默认为一个空对象
     }
   },
   components: {
     Yxform
   },
-  setup() {
-    const dialogVisible = ref(true)
-    const formData = ref({})
+  setup(props) {
+    const dialogVisible = ref(false)
+    const formData = ref<any>({})
+
+    watch(
+      () => props.defaultInfo,
+      (newValue) => {
+        for (const item of props.modalConfig.formItems) {
+          formData.value[`${item.field}`] = newValue[`${item.field}`]
+        }
+      }
+    )
 
     return {
       dialogVisible,

@@ -63,7 +63,13 @@ export default defineComponent({
         console.log('phoneRef调用对应的组件方法')
       }
     }
-    return { isKeepPassword, handleLoginClick, accountRef, phoneRef, currentTab }
+    return {
+      isKeepPassword,
+      handleLoginClick,
+      accountRef,
+      phoneRef,
+      currentTab
+    }
   }
 })
 </script>

@@ -29,19 +29,12 @@
     "paths": {
       "@/*": ["src/*"],
       "components/*": ["src/components/*"]
-
     },
     // 可以指定在项目中可以使用哪里库的类型(Proxy/Window/Document)
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   // 当前有哪些代码是需要通过编译解析的
-  "include": [
-    "src/**/*.ts",
-    "src/**/*.tsx",
-    "src/**/*.vue",
-    "tests/**/*.ts",
-    "tests/**/*.tsx"
-  ],
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
   // 哪些代码不用编译解析
   "exclude": ["node_modules"]
 }
