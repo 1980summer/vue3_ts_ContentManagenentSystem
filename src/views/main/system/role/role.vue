@@ -4,25 +4,52 @@
     <PageContent
       :contentTableConfig="contentTableConfig"
       pageName="role"
+      @newBtnClick="handleNewData"
+      @editBtnClick="handleEditData"
     ></PageContent>
+
+    <PageModal
+      ref="pageModalRef"
+      :defaultInfo="defaultInfo"
+      :modalConfig="modalConfig"
+      pageName="role"
+    ></PageModal>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+
 import PageContent from '@/components/page-content'
 import PageSearch from '@/components/page-search'
+import PageModal from '@/components/page-modal'
+
 import { contentTableConfig } from './config/content-config'
 import { searchFormConfig } from './config/serach.config'
+import { modalConfig } from './config/modal.config'
+
+import { usePageModal } from '@/hooks/usePageModal'
 
 export default defineComponent({
   name: 'role',
   components: {
     PageContent,
-    PageSearch
+    PageSearch,
+    PageModal
   },
   setup() {
-    return { searchFormConfig, contentTableConfig }
+    const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
+      usePageModal()
+
+    return {
+      searchFormConfig,
+      contentTableConfig,
+      modalConfig,
+      pageModalRef,
+      defaultInfo,
+      handleNewData,
+      handleEditData
+    }
   }
 })
 </script>
