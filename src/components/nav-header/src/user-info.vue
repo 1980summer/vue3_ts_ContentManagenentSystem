@@ -9,7 +9,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>
+          <el-dropdown-item @click="handleExistClick">
             <el-icon><Close /></el-icon>
             退出登录</el-dropdown-item
           >
@@ -30,7 +30,9 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue'
 import { useStore } from '@/store'
+import { useRouter } from 'vue-router'
 import { Close, Document, Setting } from '@element-plus/icons'
+import LocalCache from '@/utils/cache'
 
 export default defineComponent({
   components: {
@@ -41,7 +43,18 @@ export default defineComponent({
   setup() {
     const store = useStore()
     const name = computed(() => store.state.loginModule.userInfo.name)
-    return { name }
+
+    // 退出登录的逻辑
+    const router = useRouter()
+    const handleExistClick = () => {
+      LocalCache.deleteItem('token')
+      router.push('/main')
+    }
+
+    return {
+      name,
+      handleExistClick
+    }
   }
 })
 </script>

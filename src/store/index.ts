@@ -52,7 +52,7 @@ const store = createStore<IRootState>({
 
 export function setupStore() {
   store.dispatch('loginModule/loadLocalLogin') // 对store里的数据做初始化
-  store.dispatch('getInitialDataAction') // 调用
+  // store.dispatch('getInitialDataAction') // 调用 (最好不要在此处调用，万一没拿到token就会出bug)
 }
 
 // 导出一个自己的useStore
