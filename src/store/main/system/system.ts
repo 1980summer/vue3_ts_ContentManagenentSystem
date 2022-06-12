@@ -69,7 +69,7 @@ const systemModule: Module<ISystemState, IRootState> = {
       // 2 对页面发送请求
       const pageResult = await getPageListData(pageUrl, payload.queryInfo)
       // 3 将数据存储到state中
-      console.log(pageResult)
+      // console.log(pageResult)
       const { list, totalCount } = pageResult.data
       // 首字母大写
       const upperPageName =
