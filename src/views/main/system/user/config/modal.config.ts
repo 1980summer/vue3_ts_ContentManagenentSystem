@@ -16,7 +16,7 @@ export const modalConfig: IForm = {
     },
     {
       field: 'password',
-      type: 'input',
+      type: 'password',
       label: '密码',
       placeholder: '请输入密码',
       isHidden: false // 默认先不隐藏，等下再配置隐藏，点击编辑才隐藏，点击新建不隐藏
