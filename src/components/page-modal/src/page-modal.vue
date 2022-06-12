@@ -2,12 +2,15 @@
   <div class="page-modal">
     <el-dialog
       v-model="dialogVisible"
-      title="新建用户"
+      title=""
       width="30%"
       center
       destroy-on-close
     >
       <Yxform v-bind="modalConfig" v-model="formData"></Yxform>
+      <!-- 插槽 -->
+      <slot></slot>
+
       <template #footer>
         <span class="dialog-footer">
           <el-button @click="dialogVisible = false">取 消</el-button>
@@ -38,6 +41,10 @@ export default defineComponent({
     pageName: {
       type: String,
       required: true
+    },
+    otherInfo: {
+      type: Object,
+      defualt: () => ({})
     }
   },
   components: {
@@ -64,14 +71,14 @@ export default defineComponent({
         // 如果有值，则点的是编辑弹出的的确定按钮
         store.dispatch('systemModule/editPageDataAction', {
           pageName: props.pageName,
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         })
       } else {
         // 点击的是新建弹出的的确定按钮
         store.dispatch('systemModule/createPageDataAction', {
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         })
       }
     }
