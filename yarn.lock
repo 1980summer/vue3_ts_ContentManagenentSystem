@@ -1931,7 +1931,7 @@
     "@vue/compiler-core" "3.2.37"
     "@vue/shared" "3.2.37"
 
-"@vue/compiler-sfc@^3.0.2":
+"@vue/compiler-sfc@^3.0.2", "@vue/compiler-sfc@^3.2.37":
   "integrity" "sha512-+7i/2+9LYlpqDv+KTtWhOZH+pa8/HnX/905MdVmAcI/mPQOBwkHHIzrsEsucyOIZQYMkXUiTkmZq5am/NyXKkg=="
   "resolved" "https://registry.npmmirror.com/@vue/compiler-sfc/-/compiler-sfc-3.2.37.tgz"
   "version" "3.2.37"
