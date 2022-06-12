@@ -18,6 +18,7 @@
       <!-- 插槽显示的部分 -->
       <div class="menu-tree">
         <el-tree
+          ref="elTreeRef"
           :data="menus"
           show-checkbox
           node-key="id"
@@ -30,7 +31,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue'
+import { defineComponent, computed, ref, nextTick } from 'vue'
 import { useStore } from '@/store'
 
 import PageContent from '@/components/page-content'
@@ -43,6 +44,10 @@ import { modalConfig } from './config/modal.config'
 
 import { usePageModal } from '@/hooks/usePageModal'
 
+import { menuMapLeafKeys } from '@/utils/map-menus'
+
+import { ElTree } from 'element-plus' // 在template里使用不需要导入，但是在js代码里使用仍需导入
+
 export default defineComponent({
   name: 'role',
   components: {
@@ -51,8 +56,17 @@ export default defineComponent({
     PageModal
   },
   setup() {
+    // 1 处理pageModal的hook
+    const elTreeRef = ref<InstanceType<typeof ElTree>>()
+    const editCallback = (item: any) => {
+      const leafKeys = menuMapLeafKeys(item.menuList)
+      nextTick(() => {
+        console.log(elTreeRef.value)
+        elTreeRef.value?.setCheckedKeys(leafKeys, false)
+      })
+    }
     const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
-      usePageModal()
+      usePageModal(undefined, editCallback)
 
     const store = useStore()
     const menus = computed(() => store.state.entireMenu)
@@ -79,7 +93,8 @@ export default defineComponent({
       menus,
       handleCheckChange,
 
-      otherInfo
+      otherInfo,
+      elTreeRef
     }
   }
 })

@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import PageModal from '@/components/page-modal'
 
-type CallbackFn = () => void // 是一个函数类型
+type CallbackFn = (item?: any) => void // 是一个函数类型
 
 export function usePageModal(newCb?: CallbackFn, editCb?: CallbackFn) {
   const pageModalRef = ref<InstanceType<typeof PageModal>>()
@@ -22,7 +22,8 @@ export function usePageModal(newCb?: CallbackFn, editCb?: CallbackFn) {
       pageModalRef.value.dialogVisible = true
     }
 
-    editCb && editCb() // 意思是当editCb有值的时候就调用
+    // console.log('点击了编辑按钮', item)
+    editCb && editCb(item) // 意思是当editCb有值的时候就调用
   }
 
   return [pageModalRef, defaultInfo, handleNewData, handleEditData]
