@@ -15,7 +15,9 @@
 
     <el-row :gutter="10" class="content-row">
       <el-col :span="12">
-        <HyCard title="分类商品的销量"></HyCard>
+        <HyCard title="分类商品的销量">
+          <BaseEchart :options="options"></BaseEchart>
+        </HyCard>
       </el-col>
       <el-col :span="12">
         <HyCard title="分类商品的收藏"></HyCard>
@@ -29,16 +31,37 @@ import { defineComponent } from 'vue'
 import { useStore } from 'vuex'
 
 import HyCard from '@/base-ui/card'
+import BaseEchart from '@/base-ui/echart'
 
 export default defineComponent({
   name: 'dashboard',
   components: {
-    HyCard
+    HyCard,
+    BaseEchart
   },
   setup() {
     const store = useStore()
     store.dispatch('dashboardModule/getDashboardDataAction')
-    return {}
+
+    const options = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar'
+        }
+      ]
+    }
+
+    return {
+      options
+    }
   }
 })
 </script>
