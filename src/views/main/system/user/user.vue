@@ -79,8 +79,8 @@ export default defineComponent({
         return { title: item.name, value: item.id }
       })
 
-      console.log(departmentItem)
-      console.log(roleItem)
+      // console.log(departmentItem)
+      // console.log(roleItem)
       return modalConfig
     })
 
