@@ -8,7 +8,9 @@
         </HyCard>
       </el-col>
       <el-col :span="10">
-        <HyCard title="不同城市商品销量"></HyCard>
+        <HyCard title="不同城市商品销量">
+          <MapEchart :map-data="addressGoodsSale"></MapEchart>
+        </HyCard>
       </el-col>
       <el-col :span="7">
         <HyCard title="分类商品数量(玫瑰图)">
@@ -41,7 +43,8 @@ import {
   PieEchart,
   RoseEchart,
   LineEchart,
-  BarEchart
+  BarEchart,
+  MapEchart
 } from '@/components/page-echarts'
 
 export default defineComponent({
@@ -51,7 +54,8 @@ export default defineComponent({
     PieEchart,
     RoseEchart,
     LineEchart,
-    BarEchart
+    BarEchart,
+    MapEchart
   },
   setup() {
     const store = useStore()
@@ -73,7 +77,6 @@ export default defineComponent({
         xLabels.push(item.name)
         values.push(item.goodsCount)
       }
-
       return { xLabels, values }
     })
 
@@ -85,13 +88,19 @@ export default defineComponent({
         xLabels.push(item.name)
         values.push(item.goodsFavor)
       }
-
       return { xLabels, values }
+    })
+
+    const addressGoodsSale = computed(() => {
+      return store.state.dashboardModule.addressGoodsSale.map((item: any) => {
+        return { name: item.address, value: item.count }
+      })
     })
     return {
       categoryGoodsCount,
       categoryGoodsSale,
-      categoryGoodsFavor
+      categoryGoodsFavor,
+      addressGoodsSale
     }
   }
 })
