@@ -2,7 +2,7 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="~@/assets/img/logo.svg" alt="logo" />
-      <span class="title" v-if="!collapse">Vue3+ Ts</span>
+      <span class="title" v-if="!collapse">Vue3 + Ts</span>
     </div>
 
     <el-menu
