@@ -47,7 +47,7 @@ const dashboardModule: Module<IDashboardState, IRootState> = {
       commit('changeCategoryGoodsSale', categorySaleResult.data)
 
       const categoryFavorResult = await getCategoryGoodsFavor()
-      commit('changeCategoryGoodsFavor', categoryFavorResult)
+      commit('changeCategoryGoodsFavor', categoryFavorResult.data)
 
       const addressGoodsResult = await getAddressGoodsSale()
       commit('changeAddressGoodsSale', addressGoodsResult.data)

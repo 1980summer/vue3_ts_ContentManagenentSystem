@@ -6,7 +6,7 @@
 
 // 使用setup新特性
 <script lang="ts" setup>
-import { ref, onMounted, defineProps, withDefaults } from 'vue'
+import { ref, onMounted, defineProps, withDefaults, watchEffect } from 'vue'
 
 import { EChartsOption } from 'echarts'
 
@@ -29,7 +29,11 @@ const echartDivRef = ref<HTMLElement>()
 
 onMounted(() => {
   const { setOptions } = useEchart(echartDivRef.value!)
-  setOptions(props.options)
+
+  // 当options发生改变时
+  watchEffect(() => {
+    setOptions(props.options)
+  })
 })
 </script>
 
