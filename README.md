@@ -6,7 +6,7 @@
 yarn install
 ```
 
-### Compiles and hot-reloads for development（把项目跑起来）
+### Compiles and hot-reloads for development（开启服务）
 
 ```
 yarn serve
@@ -15,7 +15,7 @@ yarn serve
 ### 在浏览器上运行
 浏览器地址栏输入 localhost:8080
 
-### Compiles and minifies for production（）
+### Compiles and minifies for production（打包）
 
 ```
 yarn build
