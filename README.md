@@ -27,7 +27,7 @@ yarn serve
 ```
 
 ### 在浏览器上运行
-浏览器地址栏输入 localhost:8080
+浏览器地址栏输入 [localhost:8080](http://localhost:8080/)
 
 ### Compiles and minifies for production（打包）
 
